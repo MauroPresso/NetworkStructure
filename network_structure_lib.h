@@ -36,7 +36,7 @@ void showIDs(void);
  * 
  * @return retorna la cantidad de dispositivos de la red (retorna en una variable, no muestra en consola).
 */
-uint8_t countDevices(uint8_t cant);
+uint8_t countDevices(void);
 
 /**
  * @brief Trabaja con el registro un equipo a eleccion.
