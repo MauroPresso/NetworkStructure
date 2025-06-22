@@ -44,3 +44,16 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
     }
 }
 
+/**
+ * @brief Trabaja con el registro un equipo a eleccion.
+ * 
+ * @param ID ID del equipo del cual se quiere obtener el registro.
+ * 
+ * @return devuelve el registro completo de ese equipo en forma de una estructura.
+*/
+struct Header getRegister(uint16_t ID)
+{
+    struct Header registro;
+    registro.Upper_Level_Device_ID = extract_bits_segment64(registro.Upper_Level_Device_ID, 0, 15);
+    
+}
