@@ -45,29 +45,42 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
 }
 
 /**
+ * @brief Cuenta la cantidad de dispositivos que hay en la red.
+ * 
+ * @return retorna la cantidad de dispositivos de la red (retorna en una variable, no muestra en consola).
+*/
+uint8_t countDevices(void)
+{
+    uint8_t cant;
+    
+    
+    return cant;
+}
+
+/**
  * @brief Trabaja con el registro un equipo a eleccion.
  * 
  * @param ID ID del equipo del cual se quiere obtener el registro.
  * 
  * @return devuelve el registro completo de ese equipo en forma de una estructura.
 */
-struct Header getRegister(uint16_t ID)
+struct Register getRegister(uint16_t ID)
 {
-    struct Header registro;
-    registro.ID = extract_bits_segment64(registro.ID, 48, 63);
-    registro.Lower_Level_Devices_Count = extract_bits_segment64(registro.Lower_Level_Devices_Count, 32, 47);
-    registro.Device_Type = extract_bits_segment64(registro.Device_Type, 24, 31);
-    if(registro.Device_Type == 1 || registro.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
+    struct Register registro;
+    registro.header.ID = extract_bits_segment64(registro.header.ID, 48, 63);
+    registro.header.Lower_Level_Devices_Count = extract_bits_segment64(registro.header.Lower_Level_Devices_Count, 32, 47);
+    registro.header.Device_Type = extract_bits_segment64(registro.header.Device_Type, 24, 31);
+    if(registro.header.Device_Type == 1 || registro.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
     {
-        if(registro.Device_Type == 1) // El dispositivo es SENSOR
+        if(registro.header.Device_Type == 1) // El dispositivo es SENSOR
         {
-            registro.Info = extract_bits_segment64(registro.Info, 20, 21);
+            registro.header.Info = extract_bits_segment64(registro.header.Info, 20, 21);
         }
-        else // registro.Device_Type == 2 -> El dispositivo es ACTUADOR
+        else // registro.header.Device_Type == 2 -> El dispositivo es ACTUADOR
         {
-            registro.Info = extract_bits_segment64(registro.Info, 23, 23);
+            registro.header.Info = extract_bits_segment64(registro.header.Info, 23, 23);
         }
     }
-    registro.Upper_Level_Device_ID = extract_bits_segment64(registro.Upper_Level_Device_ID, 0, 15);
+    registro.header.Upper_Level_Device_ID = extract_bits_segment64(registro.header.Upper_Level_Device_ID, 0, 15);
     return registro;
 }
