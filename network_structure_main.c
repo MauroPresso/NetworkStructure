@@ -1,8 +1,8 @@
 /**
- * @file network_structure_lib.h
- * @brief Desarrollos de funciones para manipulación de datos.
+ * @file network_structure_main.c
+ * @brief Programa principal.
  *
- * Este archivo contiene los desarrollos de funciones para manipular datos.
+ * Este archivo contiene el programa principal.
 */
 
 #include <stdint.h>
@@ -10,3 +10,5 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "network_structure_lib.h"
+
+
