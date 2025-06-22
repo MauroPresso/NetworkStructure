@@ -39,7 +39,7 @@ void showIDs(void);
 uint8_t countDevices(uint8_t cant);
 
 /**
- * @brief Cuenta la cantidad de dispositivos que hay en la red.
+ * @brief Trabaja con el registro un equipo a eleccion.
  * 
  * @param ID ID del equipo del cual se quiere obtener el registro.
  * 
