@@ -51,10 +51,33 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
 */
 uint8_t count_Devices(void)
 {
-    uint8_t cant;
+    FILE *pf;
+    pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
+    if (pf == NULL)
+    {
+        printf("\nError 404: Not Found\n");
+        return 0;
+    }
+    else
+    {
+        printf("\nFile opening was OK. Continue with the procedure\n");
+    }
+    uint64_t header;
     
-    
-    return cant;
+    uint16_t lower_level_devices_count;
+
+    uint8_t total_devices_count;
+    total_devices_count = 0;
+    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
+    {
+        total_devices_count++;
+        // Extraer el número de dispositivos de nivel inferior (bits 32-47)
+        lower_level_devices_count = extract_bits_segment64(header, 32, 47); // Paso header como primer parámetro porque lo leyó primero.
+        // Saltar los IDs de los dispositivos conectados (cada uno son 2 bytes)
+        fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
+    }
+    fclose(pf);
+    return total_devices_count;
 }
 
 /**
