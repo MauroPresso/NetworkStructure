@@ -37,14 +37,14 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
 /**
  * @brief muestra en consola los ID de todos los equipos de la red.
 */
-void showIDs(void);
+void show_IDs(void);
 
 /**
  * @brief Cuenta la cantidad de dispositivos que hay en la red.
  * 
  * @return retorna la cantidad de dispositivos de la red (retorna en una variable, no muestra en consola).
 */
-uint8_t countDevices(void);
+uint8_t count_Devices(void);
 
 /**
  * @brief Trabaja con el registro un equipo a eleccion.
