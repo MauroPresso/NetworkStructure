@@ -54,6 +54,20 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
 struct Header getRegister(uint16_t ID)
 {
     struct Header registro;
+    registro.ID = extract_bits_segment64(registro.ID, 48, 63);
+    registro.Lower_Level_Devices_Count = extract_bits_segment64(registro.Lower_Level_Devices_Count, 32, 47);
+    registro.Device_Type = extract_bits_segment64(registro.Device_Type, 24, 31);
+    if(registro.Device_Type == 1 || registro.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
+    {
+        if(registro.Device_Type == 1) // El dispositivo es SENSOR
+        {
+            registro.Info = extract_bits_segment64(registro.Info, 20, 21);
+        }
+        else // registro.Device_Type == 2 -> El dispositivo es ACTUADOR
+        {
+            registro.Info = extract_bits_segment64(registro.Info, 23, 23);
+        }
+    }
     registro.Upper_Level_Device_ID = extract_bits_segment64(registro.Upper_Level_Device_ID, 0, 15);
-    
+    return registro;
 }
