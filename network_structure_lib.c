@@ -64,7 +64,7 @@ uint8_t countDevices(void)
  * 
  * @return devuelve el registro completo de ese equipo en forma de una estructura.
 */
-struct Register getRegister(uint16_t ID)
+struct Register get_Register(uint16_t ID)
 {
     struct Register registro;
     registro.header.ID = extract_bits_segment64(registro.header.ID, 48, 63);
