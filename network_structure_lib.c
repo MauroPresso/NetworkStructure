@@ -49,7 +49,7 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
  * 
  * @return retorna la cantidad de dispositivos de la red (retorna en una variable, no muestra en consola).
 */
-uint8_t countDevices(void)
+uint8_t count_Devices(void)
 {
     uint8_t cant;
     
