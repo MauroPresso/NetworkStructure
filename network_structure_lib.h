@@ -16,8 +16,6 @@ struct Header
     uint16_t ID;
 };
 
-
-
 /**
  * @brief Extrae un segmento de bits de un valor de 64 bits.
  * 
