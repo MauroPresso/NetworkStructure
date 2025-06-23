@@ -68,7 +68,7 @@ uint8_t count_Devices(void)
 
     uint8_t total_devices_count;
     total_devices_count = 0;
-    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
+    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
     {
         total_devices_count++;
         // Extraer el número de dispositivos de nivel inferior (bits 32-47)
@@ -89,21 +89,28 @@ uint8_t count_Devices(void)
 */
 struct Register get_Register(uint16_t ID)
 {
-    struct Register registro;
-    registro.header.ID = extract_bits_segment64(registro.header.ID, 48, 63);
-    registro.header.Lower_Level_Devices_Count = extract_bits_segment64(registro.header.Lower_Level_Devices_Count, 32, 47);
-    registro.header.Device_Type = extract_bits_segment64(registro.header.Device_Type, 24, 31);
-    if(registro.header.Device_Type == 1 || registro.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
+    FILE *pf;
+    pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
+    if (pf == NULL)
     {
-        if(registro.header.Device_Type == 1) // El dispositivo es SENSOR
-        {
-            registro.header.Info = extract_bits_segment64(registro.header.Info, 20, 21);
-        }
-        else // registro.header.Device_Type == 2 -> El dispositivo es ACTUADOR
-        {
-            registro.header.Info = extract_bits_segment64(registro.header.Info, 23, 23);
-        }
+        printf("\nError 404: Not Found\n");
+        return ;
     }
-    registro.header.Upper_Level_Device_ID = extract_bits_segment64(registro.header.Upper_Level_Device_ID, 0, 15);
+    else
+    {
+        printf("\nFile opening was OK. Continue with the procedure\n");
+    }
+    struct Register registro;
+    uint64_t header;
+    uint16_t upper_level_device_id;
+    uint8_t info;
+    uint8_t device_type;
+    uint16_t lower_level_devices_count;
+    uint16_t id;
+    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
+    {
+
+    }
+    fclose(pf);
     return registro;
 }
