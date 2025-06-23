@@ -16,7 +16,7 @@ struct Header
     uint16_t ID;
 };
 
-struct Register
+struct Registro
 {
     struct Header header;
     uint16_t Lower_Level_Device_ID_1;
@@ -53,4 +53,4 @@ uint8_t count_Devices(void);
  * 
  * @return devuelve el registro completo de ese equipo en forma de una estructura.
 */
-struct Register get_Register(uint16_t ID);
+struct Registro getRegister(uint16_t target_id);
