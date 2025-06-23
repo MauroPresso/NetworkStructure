@@ -87,7 +87,7 @@ uint8_t count_Devices(void)
  * 
  * @return devuelve el registro completo de ese equipo en forma de una estructura.
 */
-struct Register get_Register(uint16_t ID)
+struct Register get_Register(uint16_t target_id)
 {
     FILE *pf;
     pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
@@ -102,14 +102,35 @@ struct Register get_Register(uint16_t ID)
     }
     struct Register registro;
     uint64_t header;
-    uint16_t upper_level_device_id;
-    uint8_t info;
-    uint8_t device_type;
     uint16_t lower_level_devices_count;
-    uint16_t id;
-    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
+    uint16_t device_id;
+    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
     {
-
+        device_id = extract_bits_segment64(header, 48, 63);
+        lower_level_devices_count = extract_bits_segment64(header, 32, 47);
+        if(target_id == device_id) // El dispositivo se encontró.
+        {
+            registro.header.ID = extract_bits_segment64(header, 48, 63);
+            registro.header.Lower_Level_Devices_Count = extract_bits_segment64(header, 32, 47);
+            registro.header.Device_Type = extract_bits_segment64(header, 24, 31);
+            if(registro.header.Device_Type == 1 || registro.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
+            {
+                if(registro.header.Device_Type == 1) // El dispositivo es SENSOR
+                {
+                registro.header.Info = extract_bits_segment64(header, 20, 21);
+                }
+                else // registro.header.Device_Type == 2 -> El dispositivo es ACTUADOR
+                {
+                    registro.header.Info = extract_bits_segment64(header, 23, 23);
+                }
+            }
+            registro.header.Upper_Level_Device_ID = extract_bits_segment64(header, 0, 15);
+        }
+        else
+        {
+            // Saltar los IDs de los dispositivos conectados (cada uno son 2 bytes)
+            fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
+        }
     }
     fclose(pf);
     return registro;
