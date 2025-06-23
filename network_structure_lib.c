@@ -87,20 +87,20 @@ uint8_t count_Devices(void)
  * 
  * @return devuelve el registro completo de ese equipo en forma de una estructura.
 */
-struct Register get_Register(uint16_t target_id)
+struct Registro getRegister(uint16_t target_id)
 {
     FILE *pf;
     pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
     if (pf == NULL)
     {
         printf("\nError 404: Not Found\n");
-        return ;
+        exit;
     }
     else
     {
         printf("\nFile opening was OK. Continue with the procedure\n");
     }
-    struct Register registro;
+    struct Registro registre;
     uint64_t header;
     uint16_t lower_level_devices_count;
     uint16_t device_id;
@@ -110,21 +110,21 @@ struct Register get_Register(uint16_t target_id)
         lower_level_devices_count = extract_bits_segment64(header, 32, 47);
         if(target_id == device_id) // El dispositivo se encontró.
         {
-            registro.header.ID = extract_bits_segment64(header, 48, 63);
-            registro.header.Lower_Level_Devices_Count = extract_bits_segment64(header, 32, 47);
-            registro.header.Device_Type = extract_bits_segment64(header, 24, 31);
-            if(registro.header.Device_Type == 1 || registro.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
+            registre.header.ID = extract_bits_segment64(header, 48, 63);
+            registre.header.Lower_Level_Devices_Count = extract_bits_segment64(header, 32, 47);
+            registre.header.Device_Type = extract_bits_segment64(header, 24, 31);
+            if(registre.header.Device_Type == 1 || registre.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
             {
-                if(registro.header.Device_Type == 1) // El dispositivo es SENSOR
+                if(registre.header.Device_Type == 1) // El dispositivo es SENSOR
                 {
-                registro.header.Info = extract_bits_segment64(header, 20, 21);
+                registre.header.Info = extract_bits_segment64(header, 20, 21);
                 }
                 else // registro.header.Device_Type == 2 -> El dispositivo es ACTUADOR
                 {
-                    registro.header.Info = extract_bits_segment64(header, 23, 23);
+                    registre.header.Info = extract_bits_segment64(header, 23, 23);
                 }
             }
-            registro.header.Upper_Level_Device_ID = extract_bits_segment64(header, 0, 15);
+            registre.header.Upper_Level_Device_ID = extract_bits_segment64(header, 0, 15);
         }
         else
         {
@@ -133,5 +133,5 @@ struct Register get_Register(uint16_t target_id)
         }
     }
     fclose(pf);
-    return registro;
+    return registre;
 }
