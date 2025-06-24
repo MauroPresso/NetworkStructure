@@ -9,11 +9,11 @@
 
 struct Header
 {
-    uint64_t Upper_Level_Device_ID;
-    uint64_t Info;
-    uint64_t Device_Type;
-    uint64_t Lower_Level_Devices_Count;
-    uint64_t ID;
+    uint16_t Upper_Level_Device_ID;
+    uint8_t Info;
+    uint8_t Device_Type;
+    uint16_t Lower_Level_Devices_Count;
+    uint16_t ID;
 };
 
 struct Registro
@@ -23,14 +23,24 @@ struct Registro
 };
 
 /**
- * @brief Extrae un segmento de bits de un valor de 64 bits.
+ * @brief Extrae un segmento de bits de un valor de 7 bits.
  * 
  * @param value Valor original.
- * @param startBit Bit inicial del segmento (0-63).
- * @param endBit Bit final del segmento (0-63).
- * @return Segmento extraído como un valor de 64 bits.
+ * @param startBit Bit inicial del segmento (0-7).
+ * @param endBit Bit final del segmento (0-7).
+ * @return Segmento extraído como un valor de 8 bits.
 */
-uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit);
+uint8_t extract_bits_segment8(uint8_t value, uint8_t startBit, uint8_t endBit);
+
+/**
+ * @brief Extrae un segmento de bits de un valor de 16 bits.
+ * 
+ * @param value Valor original.
+ * @param startBit Bit inicial del segmento (0-15).
+ * @param endBit Bit final del segmento (0-15).
+ * @return Segmento extraído como un valor de 16 bits.
+*/
+uint16_t extract_bits_segment16(uint16_t value, uint8_t startBit, uint8_t endBit);
 
 /**
  * @brief muestra en consola los ID de todos los equipos de la red.
