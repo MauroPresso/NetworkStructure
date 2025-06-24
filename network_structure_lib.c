@@ -102,7 +102,6 @@ struct Registro getRegister(uint16_t target_id)
     }
     struct Registro registre;
     uint64_t header;
-    uint16_t lowerID;
     uint16_t lower_level_devices_count;
     uint16_t device_id;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
@@ -134,7 +133,7 @@ struct Registro getRegister(uint16_t target_id)
             {
                 printf("Error: No se pudo asignar memoria para LowerIDsVector\n");
                 fclose(pf);
-                return registre; // Retorna estructura vacía (inicializada a cero)
+                return registre;
             }
             // 2. Leer los IDs de conexiones
             for(uint8_t i = 0; i < lower_level_devices_count; i++) 
