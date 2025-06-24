@@ -19,9 +19,7 @@ struct Header
 struct Registro
 {
     struct Header header;
-    uint16_t Lower_Level_Device_ID_1;
-    uint16_t Lower_Level_Device_ID_2;
-    uint16_t Lower_Level_Device_ID_3;
+    uint16_t* LowerIDsVector; 
 };
 
 /**
