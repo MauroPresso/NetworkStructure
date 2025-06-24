@@ -50,8 +50,8 @@ uint8_t extract_bits_segment8(uint8_t value, uint8_t startBit, uint8_t endBit)
 * Devuelve un segmento de bits definido por las posiciones startBit y endBit.
 * 
 * @param value Valor original.
-* @param startBit Posición inicial (0-63).
-* @param endBit Posición final (0-63).
+* @param startBit Posición inicial (0-15).
+* @param endBit Posición final (0-15).
 * @return Segmento de bits extraído. Si las posiciones son inválidas, retorna el valor original.
 */
 uint16_t extract_bits_segment16(uint16_t value, uint8_t startBit, uint8_t endBit) 
