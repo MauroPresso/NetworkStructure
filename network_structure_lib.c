@@ -68,9 +68,9 @@ uint8_t count_Devices(void)
 
     uint8_t total_devices_count;
     total_devices_count = 0;
-    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
+    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
-        total_devices_count++;
+        total_devices_count++; // Cada header que lee, es un device que se debe sumar a la cuenta.
         // Extraer el número de dispositivos de nivel inferior (bits 32-47)
         lower_level_devices_count = extract_bits_segment64(header, 32, 47); // Paso header como primer parámetro porque lo leyó primero.
         // Saltar los IDs de los dispositivos conectados (cada uno son 2 bytes)
@@ -102,9 +102,10 @@ struct Registro getRegister(uint16_t target_id)
     }
     struct Registro registre;
     uint64_t header;
+    uint16_t lowerID;
     uint16_t lower_level_devices_count;
     uint16_t device_id;
-    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Si yo le pido a la funcion fread() que lea 'tanto', se corre 'tanto'.
+    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
         device_id = extract_bits_segment64(header, 48, 63);
         lower_level_devices_count = extract_bits_segment64(header, 32, 47);
@@ -125,6 +126,26 @@ struct Registro getRegister(uint16_t target_id)
                 }
             }
             registre.header.Upper_Level_Device_ID = extract_bits_segment64(header, 0, 15);
+            // Terminó de leer el header.
+            // Creo el vector dinámico para guardar los IDs.
+            registre.LowerIDsVector = (uint16_t*)malloc((lower_level_devices_count) * sizeof(uint16_t));
+            // Verificar si malloc tuvo éxito (OBLIGATORIO para el examen)
+            if (registre.LowerIDsVector == NULL) 
+            {
+                printf("Error: No se pudo asignar memoria para LowerIDsVector\n");
+                fclose(pf);
+                return registre; // Retorna estructura vacía (inicializada a cero)
+            }
+            // 2. Leer los IDs de conexiones
+            for(uint8_t i = 0; i < lower_level_devices_count; i++) 
+            {
+                if (fread(&(registre.LowerIDsVector[i]), sizeof(uint16_t), 1, pf) != 0)
+                {
+                    printf("Error al leer el ID de conexión %u\n", i);
+                    free(registre.LowerIDsVector); // Liberar memoria si falla la lectura
+                    registre.LowerIDsVector = NULL;
+                }
+            }
         }
         else
         {
