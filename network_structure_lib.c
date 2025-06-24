@@ -102,8 +102,8 @@ struct Registro getRegister(uint16_t target_id)
     }
     struct Registro registre;
     uint64_t header;
-    uint16_t lower_level_devices_count;
-    uint16_t device_id;
+    uint64_t lower_level_devices_count;
+    uint64_t device_id;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
         device_id = extract_bits_segment64(header, 48, 63);
@@ -154,4 +154,12 @@ struct Registro getRegister(uint16_t target_id)
     }
     fclose(pf);
     return registre;
+}
+
+/**
+ * @brief muestra en consola los ID de todos los equipos de la red.
+*/
+void show_IDs(void)
+{
+    
 }
