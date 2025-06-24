@@ -63,8 +63,8 @@ uint8_t countDevices(void)
         printf("\nFile opening was OK. Continue with the procedure\n");
     }
     uint64_t header;
-    uint16_t lower_level_devices_count;
-    uint8_t total_devices_count;
+    uint64_t lower_level_devices_count;
+    uint64_t total_devices_count;
     total_devices_count = 0;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
@@ -100,8 +100,8 @@ struct Registro getRegister(uint16_t target_id)
     }
     struct Registro registre;
     uint64_t header;
-    uint16_t lower_level_devices_count;
-    uint16_t device_id;
+    uint64_t lower_level_devices_count;
+    uint64_t device_id;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
         device_id = extract_bits_segment64(header, 48, 63);
@@ -171,7 +171,7 @@ void showIDs(void)
         printf("\nFile opening was OK. Continue with the procedure\n");
     }
     uint64_t header;
-    uint16_t lower_level_devices_count;
+    uint64_t lower_level_devices_count;
 
 
 
