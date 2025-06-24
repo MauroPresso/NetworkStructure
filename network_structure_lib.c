@@ -49,7 +49,7 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
  * 
  * @return retorna la cantidad de dispositivos de la red (retorna en una variable, no muestra en consola).
 */
-uint8_t count_Devices(void)
+uint8_t countDevices(void)
 {
     FILE *pf;
     pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
@@ -63,9 +63,7 @@ uint8_t count_Devices(void)
         printf("\nFile opening was OK. Continue with the procedure\n");
     }
     uint64_t header;
-    
     uint16_t lower_level_devices_count;
-
     uint8_t total_devices_count;
     total_devices_count = 0;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
@@ -102,8 +100,8 @@ struct Registro getRegister(uint16_t target_id)
     }
     struct Registro registre;
     uint64_t header;
-    uint64_t lower_level_devices_count;
-    uint64_t device_id;
+    uint16_t lower_level_devices_count;
+    uint16_t device_id;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
         device_id = extract_bits_segment64(header, 48, 63);
@@ -138,7 +136,7 @@ struct Registro getRegister(uint16_t target_id)
             // 2. Leer los IDs de conexiones
             for(uint8_t i = 0; i < lower_level_devices_count; i++) 
             {
-                if (fread(&(registre.LowerIDsVector[i]), sizeof(uint16_t), 1, pf) != 0)
+                if (fread(&(registre.LowerIDsVector[i]), sizeof(uint16_t), 1, pf) != 1) // Falló la lectura.
                 {
                     printf("Error al leer el ID de conexión %u\n", i);
                     free(registre.LowerIDsVector); // Liberar memoria si falla la lectura
@@ -159,7 +157,23 @@ struct Registro getRegister(uint16_t target_id)
 /**
  * @brief muestra en consola los ID de todos los equipos de la red.
 */
-void show_IDs(void)
+void showIDs(void)
 {
-    
+    FILE *pf;
+    pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
+    if (pf == NULL)
+    {
+        printf("\nError 404: Not Found\n");
+        exit;
+    }
+    else
+    {
+        printf("\nFile opening was OK. Continue with the procedure\n");
+    }
+    uint64_t header;
+    uint16_t lower_level_devices_count;
+
+
+
+    fclose(pf);
 }
