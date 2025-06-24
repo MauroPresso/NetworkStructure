@@ -115,7 +115,7 @@ struct Registro getRegister(uint16_t target_id)
             {
                 if(registre.header.Device_Type == 1) // El dispositivo es SENSOR
                 {
-                registre.header.Info = extract_bits_segment64(header, 20, 21);
+                    registre.header.Info = extract_bits_segment64(header, 20, 21);
                 }
                 else // registro.header.Device_Type == 2 -> El dispositivo es ACTUADOR
                 {
