@@ -6,14 +6,16 @@
 */
 
 #include <stdint.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "network_structure_lib.h"
 
 int main()
 {
-    showIDs();
+    uint8_t totalDeDispositivos;
+    totalDeDispositivos = countDevices();
+    printf("\nTotal de dispositivos en la red: %u", totalDeDispositivos);
+    printf("\n-------------------------------------------------------------\n\n");
 
     return 0;
 }
