@@ -54,11 +54,14 @@ uint8_t countDevices(void)
     pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
     if (pf == NULL)
     {
+        printf("\n-------------------------------------------------------------");
         printf("\nError 404: Not Found\n");
+        printf("-------------------------------------------------------------\n");
         return 0;
     }
     else
     {
+        printf("\n-------------------------------------------------------------");
         printf("\nFile opening was OK. Continue with the procedure\n");
     }
     uint64_t header;
@@ -75,6 +78,7 @@ uint8_t countDevices(void)
     }
     fclose(pf);
     printf("\nFile closing was OK. Continue with the program.\n");
+    printf("-------------------------------------------------------------\n");
     return total_devices_count;
 }
 
@@ -155,6 +159,7 @@ struct Registro getRegister(uint16_t target_id)
     }
     fclose(pf);
     printf("\nFile closing was OK. Continue with the program.\n");
+    printf("-------------------------------------------------------------\n");
     return registre;
 }
 
