@@ -11,4 +11,9 @@
 #include <stdlib.h>
 #include "network_structure_lib.h"
 
+int main()
+{
+    showIDs();
 
+    return 0;
+}
