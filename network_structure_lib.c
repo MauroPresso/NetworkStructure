@@ -204,9 +204,21 @@ void showIDs(void)
         printf("\nFile opening was OK. Continue with the procedure\n");
     }
     uint64_t header;
-    uint64_t lower_level_devices_count;
-
-
-
+    uint16_t lower_level_devices_count;
+    uint16_t device_id;
+    uint8_t total_devices_count;
+    total_devices_count = countDevices();
+    printf("\n------------------------------------------\n");
+    for(uint8_t i = 0; i < total_devices_count; i++)
+    {
+        while(fread(&header, sizeof(uint64_t), 1, pf) != 0)
+        {
+            device_id = extract_bits_segment16(header, 48, 63);
+            printf("ID del dispositivo %d: %u\t->");
+            lower_level_devices_count = extract_bits_segment16(header, 32, 47);
+            fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
+        }
+    }
+    printf("\n------------------------------------------\n");
     fclose(pf);
 }
