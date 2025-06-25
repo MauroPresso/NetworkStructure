@@ -214,7 +214,7 @@ void showIDs(void)
         while(fread(&header, sizeof(uint64_t), 1, pf) != 0)
         {
             device_id = extract_bits_segment16(header, 48, 63);
-            printf("ID del dispositivo %d: %u\t->");
+            printf("ID del dispositivo %u: %u\t->");
             lower_level_devices_count = extract_bits_segment16(header, 32, 47);
             fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
         }
