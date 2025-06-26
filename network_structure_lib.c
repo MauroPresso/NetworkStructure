@@ -183,22 +183,26 @@ void showIDs(void)
         printf("\nFile opening was OK. Continue with the procedure.\n");
     }
     uint64_t header;
-    uint16_t lower_level_devices_count;
     uint16_t device_id;
-    uint8_t counter = 0;
-    uint8_t total_devices_count;
-    total_devices_count = countDevices();
-    printf("\n------------------------------------------\n");
-    while(fread(&header, sizeof(uint64_t), 1, pf) != 0)
+    int counter = 0;
+    printf("\n=== IDs validos de dispositivos ===\n");
+    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) 
     {
-        counter++;
-        device_id = (uint16_t)extract_bits_segment64(header, 48, 63);
-        printf("Dispositivo %u: ID = %u\n", counter, device_id);
-        // Saltar conexiones
-        lower_level_devices_count = (uint16_t)extract_bits_segment64(header, 32, 47);
-        fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
+        // Extraer ID (primeros 16 bits del header)
+        device_id = *((uint16_t*)&header); // Alternativa directa
+        // Filtrar ID inválido (65535)
+        if(device_id != 65535) 
+        {
+            printf("Dispositivo %d: ID = %u\n", ++counter, device_id);
+        }
+        // Saltar conexiones (asumiendo 2 bytes por ID)
+        uint16_t num_conexiones = *((uint16_t*)&header + 1); // Segundo uint16_t
+        fseek(pf, num_conexiones * sizeof(uint16_t), SEEK_CUR);
     }
-    printf("\n------------------------------------------\n");
+    if(counter == 0) 
+    {
+        printf("No se encontraron dispositivos validos.\n");
+    }
     fclose(pf);
     printf("\nFile closing was OK. Continue with the program.\n");
     printf("-------------------------------------------------------------\n");
