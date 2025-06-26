@@ -62,7 +62,7 @@ uint8_t countDevices(void)
     else
     {
         printf("\n-------------------------------------------------------------");
-        printf("\nFile opening was OK. Continue with the procedure\n");
+        printf("\nFile opening was OK. Continue with the procedure.\n");
     }
     uint64_t header;
     uint64_t lower_level_devices_count;
@@ -103,7 +103,7 @@ struct Registro getRegister(uint16_t target_id)
     else
     {
         printf("\n-------------------------------------------------------------");
-        printf("\nFile opening was OK. Continue with the procedure\n");
+        printf("\nFile opening was OK. Continue with the procedure.\n");
     }
     struct Registro registre;
     uint64_t header;
@@ -180,23 +180,23 @@ void showIDs(void)
     else
     {
         printf("\n-------------------------------------------------------------");
-        printf("\nFile opening was OK. Continue with the procedure\n");
+        printf("\nFile opening was OK. Continue with the procedure.\n");
     }
     uint64_t header;
-    uint64_t lower_level_devices_count;
-    uint64_t device_id;
+    uint16_t lower_level_devices_count;
+    uint16_t device_id;
+    uint8_t counter = 0;
     uint8_t total_devices_count;
     total_devices_count = countDevices();
     printf("\n------------------------------------------\n");
-    for(uint8_t i = 0; i < total_devices_count; i++)
+    while(fread(&header, sizeof(uint64_t), 1, pf) != 0)
     {
-        while(fread(&header, sizeof(uint64_t), 1, pf) != 0)
-        {
-            device_id = extract_bits_segment64(header, 48, 63);
-            printf("ID del dispositivo %u: %u\t->", i+1, device_id);
-            lower_level_devices_count = extract_bits_segment64(header, 32, 47);
-            fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
-        }
+        counter++;
+        device_id = (uint16_t)extract_bits_segment64(header, 48, 63);
+        printf("Dispositivo %u: ID = %u\n", counter, device_id);
+        // Saltar conexiones
+        lower_level_devices_count = (uint16_t)extract_bits_segment64(header, 32, 47);
+        fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
     }
     printf("\n------------------------------------------\n");
     fclose(pf);
