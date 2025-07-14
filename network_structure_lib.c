@@ -66,14 +66,14 @@ uint8_t countDevices(void)
         printf("-------------------------------------------------------------\n");
     }
     uint64_t header;
-    uint64_t lower_level_devices_count;
+    uint16_t lower_level_devices_count;
     uint8_t total_devices_count;
     total_devices_count = 0;
     while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
         total_devices_count++; // Cada header que lee, es un device que se debe sumar a la cuenta.
-        // Extraer el número de dispositivos de nivel inferior (bits 32-47)
-        lower_level_devices_count = extract_bits_segment64(header, 32, 47); // Paso header como primer parámetro porque lo leyó primero.
+        // Extraer el número de dispositivos de nivel inferior (bits 16-31)
+        lower_level_devices_count = (uint16_t) extract_bits_segment64(header, 16, 31); // Paso header como primer parámetro porque lo leyó primero.
         // Saltar los IDs de los dispositivos conectados (cada uno son 2 bytes)
         fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
     }
@@ -112,24 +112,24 @@ struct Registro getRegister(uint16_t target_id)
     uint64_t header;
     uint16_t lower_level_devices_count;
     uint16_t device_id;
-    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) // Mientras lea un header, sigue en el bucle.
+    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
     {
-        device_id = extract_bits_segment64(header, 0, 15);
-        lower_level_devices_count = extract_bits_segment64(header, 16, 23);
+        device_id = (uint16_t) extract_bits_segment64(header, 0, 15);
+        lower_level_devices_count = (uint16_t) extract_bits_segment64(header, 16, 31);
         if(target_id == device_id) // El dispositivo se encontró.
         {
-            registre.header.ID = extract_bits_segment64(header, 0, 15);
-            registre.header.Lower_Level_Devices_Count = extract_bits_segment64(header, 16, 23);
-            registre.header.Device_Type = extract_bits_segment64(header, 32, 49);
+            registre.header.ID = (uint16_t) extract_bits_segment64(header, 0, 15);
+            registre.header.Lower_Level_Devices_Count = (uint16_t) extract_bits_segment64(header, 16, 31);
+            registre.header.Device_Type = (uint8_t) extract_bits_segment64(header, 32, 39);
             if(registre.header.Device_Type == 1 || registre.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
             {
                 if(registre.header.Device_Type == 1) // El dispositivo es SENSOR
                 {
-                    registre.header.Info = extract_bits_segment64(header, 20, 21);
+                    registre.header.Info = (uint8_t) extract_bits_segment64(header, 41, 43);
                 }
                 else // registro.header.Device_Type == 2 -> El dispositivo es ACTUADOR
                 {
-                    registre.header.Info = extract_bits_segment64(header, 23, 23);
+                    registre.header.Info = (uint8_t) extract_bits_segment64(header, 44, 47);
                 }
             }
             registre.header.Upper_Level_Device_ID = extract_bits_segment64(header, 48, 63);
@@ -189,23 +189,20 @@ void showIDs(void)
     }
     uint64_t header;
     uint16_t device_id;
-    uint16_t n_children;
+    uint16_t lower_level_devices_count;
     int counter = 0;
     printf("\n=== IDs validos de dispositivos ===\n\n");
-    while (fread(&header, sizeof header, 1, pf) == 1) 
+    while (fread(&header, sizeof header, 1, pf) != 0) 
     {
         // EXTRAER Device ID de bits 0–15
         device_id  = (uint16_t) extract_bits_segment64(header, 0, 15);
-        // EXTRAER N hijos de bits 32–47
-        n_children = (uint16_t) extract_bits_segment64(header, 16, 23);
+        // EXTRAER N hijos de bits 16–31
+        lower_level_devices_count = (uint16_t) extract_bits_segment64(header, 16, 31);
+        counter++;
         // Mostrar
-        printf("Dispositivo %2d -> ID = %5hu (N hijos = %4hu)\n", ++counter, device_id, n_children);
+        printf("Dispositivo %d -> ID = %u (N hijos = %u)\n", counter, device_id, lower_level_devices_count);
         // Saltar los IDs de los hijos
-        if (fseek(pf, n_children * sizeof(uint16_t), SEEK_CUR) != 0) 
-        {
-            perror("showIDs: fseek");
-            break;
-        }
+        fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
     }
     if(counter == 0) 
     {
