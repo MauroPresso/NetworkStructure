@@ -112,14 +112,14 @@ struct Registro getRegister(uint16_t target_id)
     uint64_t header;
     uint16_t lower_level_devices_count;
     uint16_t device_id;
-    while(fread(&header, sizeof(uint64_t), 1, pf) != 0) // Mientras lea un header, sigue en el bucle.
+    while(fread(&header, sizeof(uint64_t), 1, pf) == 1) // Mientras lea un header, sigue en el bucle.
     {
-        device_id = extract_bits_segment64(header, 48, 63);
-        lower_level_devices_count = extract_bits_segment64(header, 32, 47);
+        device_id = extract_bits_segment64(header, 0, 15);
+        lower_level_devices_count = extract_bits_segment64(header, 16, 23);
         if(target_id == device_id) // El dispositivo se encontró.
         {
-            registre.header.ID = extract_bits_segment64(header, 48, 63);
-            registre.header.Lower_Level_Devices_Count = extract_bits_segment64(header, 32, 47);
+            registre.header.ID = extract_bits_segment64(header, 0, 15);
+            registre.header.Lower_Level_Devices_Count = extract_bits_segment64(header, 16, 23);
             registre.header.Device_Type = extract_bits_segment64(header, 24, 31);
             if(registre.header.Device_Type == 1 || registre.header.Device_Type == 2) // El dispositivo es SENSOR o ACTUADOR
             {
@@ -132,7 +132,7 @@ struct Registro getRegister(uint16_t target_id)
                     registre.header.Info = extract_bits_segment64(header, 23, 23);
                 }
             }
-            registre.header.Upper_Level_Device_ID = extract_bits_segment64(header, 0, 15);
+            registre.header.Upper_Level_Device_ID = extract_bits_segment64(header, 48, 63);
             // Terminó de leer el header.
             // Creo el vector dinámico para guardar los IDs.
             registre.LowerIDsVector = (uint16_t*)malloc((lower_level_devices_count) * sizeof(uint16_t));
