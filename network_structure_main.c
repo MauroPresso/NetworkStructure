@@ -27,6 +27,9 @@ int main()
     printf("\n-----------------------------\n");
     printf("Registro completo del dispositivo nro %u\n\n", targetID);
     printf("- ID: %u\n", registro.header.ID);
+    printf("- Tipo de Dispositivo: %u\n", registro.header.Device_Type);
+    printf("- Info de Dispositivo: %u\n", registro.header.Info);
+    printf("- ID del dispositivo padre: %u", registro.header.Upper_Level_Device_ID);
     if(registro.header.Device_Type == 0)
     {
         printf("- Tipo de dispositivo: CPU\n");
@@ -34,7 +37,7 @@ int main()
     if(registro.header.Device_Type == 1)
     {
         printf("- Tipo de dispositivo: SENSOR\t");
-        if(registro.header.Info == 0)
+        /*if(registro.header.Info == 0)
         {
             printf("de CAUDAL\n");
         }
@@ -49,19 +52,19 @@ int main()
         if(registro.header.Info == 3)
         {
             printf("de NIVEL\n");
-        }
+        }*/
     }
     if(registro.header.Device_Type == 2)
     {
         printf("- Tipo de dispositivo: ACTUADOR\t");
-        if(registro.header.Info == 0)
+        /*if(registro.header.Info == 0)
         {
             printf("(VALVULA)\n");
         }
         if(registro.header.Info == 1)
         {
             printf("(MOTOR)\n");
-        }
+        }*/
     }
     if(registro.header.Device_Type == 3)
     {
