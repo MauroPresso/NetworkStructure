@@ -14,8 +14,63 @@ int main()
 {
     uint8_t totalDeDispositivos;
     totalDeDispositivos = countDevices();
+    printf("\n-------------------------------------------------------------");
     printf("\nTotal de dispositivos en la red: %u", totalDeDispositivos);
-    printf("\n-------------------------------------------------------------\n\n");
-
+    printf("\n-------------------------------------------------------------\n");
+    showIDs();
+    printf("\n-------------------------------------------------------------\n");
+    uint16_t targetID;
+    printf("\nIngrese el ID del dispositivo del cual desee obtener el registro completo:\t");
+    scanf("%u" , &targetID);
+    struct Registro registro;
+    registro = getRegister(targetID);
+    printf("\n-----------------------------\n");
+    printf("Registro completo del dispositivo nro %u\n\n", targetID);
+    printf("- ID: %u\n", registro.header.ID);
+    if(registro.header.Device_Type == 0)
+    {
+        printf("- Tipo de dispositivo: CPU\n");
+    }
+    if(registro.header.Device_Type == 1)
+    {
+        printf("- Tipo de dispositivo: SENSOR\t");
+        if(registro.header.Info == 0)
+        {
+            printf("de CAUDAL\n");
+        }
+        if(registro.header.Info == 1)
+        {
+            printf("de TEMPERATURA\n");
+        }
+        if(registro.header.Info == 2)
+        {
+            printf("de PRESION\n");
+        }
+        if(registro.header.Info == 3)
+        {
+            printf("de NIVEL\n");
+        }
+    }
+    if(registro.header.Device_Type == 2)
+    {
+        printf("- Tipo de dispositivo: ACTUADOR\t");
+        if(registro.header.Info == 0)
+        {
+            printf("(VALVULA)\n");
+        }
+        if(registro.header.Info == 1)
+        {
+            printf("(MOTOR)\n");
+        }
+    }
+    if(registro.header.Device_Type == 3)
+    {
+        printf("- Tipo de dispositivo: CONCENTRADOR\n");   
+    }
+    printf("- Cantidad de dispositivos hijos: %u\n", registro.header.Lower_Level_Devices_Count);
+    printf("-----------------------------\n");
+    printf("\n-------------------------------------------------------------\n");
+    printf("FIN DEL PROGRAMA :D");
+    printf("\n-------------------------------------------------------------\n");
     return 0;
 }
