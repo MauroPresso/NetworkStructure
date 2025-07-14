@@ -9,11 +9,11 @@
 
 struct Header
 {
-    uint64_t Upper_Level_Device_ID;
-    uint64_t Info;
-    uint64_t Device_Type;
-    uint64_t Lower_Level_Devices_Count;
-    uint64_t ID;
+    uint16_t Upper_Level_Device_ID;
+    uint8_t Info;
+    uint8_t Device_Type;
+    uint16_t Lower_Level_Devices_Count;
+    uint16_t ID;
 };
 
 struct Registro
