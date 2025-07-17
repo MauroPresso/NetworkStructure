@@ -24,7 +24,7 @@ int main()
     scanf("%u" , &targetID);
     struct Registro registro;
     registro = getRegister(targetID);
-    printf("\n-----------------------------\n");
+    printf("\n---------------------------------------------\n");
     printf("Registro completo del dispositivo nro %u\n\n", targetID);
     printf("- ID: %u\n", registro.header.ID);
     /*printf("- Tipo de Dispositivo: %u\n", registro.header.Device_Type);
@@ -71,7 +71,14 @@ int main()
     }
     printf("- ID del dispositivo padre: %u\n", registro.header.Upper_Level_Device_ID);
     printf("- Cantidad de dispositivos hijos: %u\n", registro.header.Lower_Level_Devices_Count);
-    printf("-----------------------------\n");
+    if(registro.header.Lower_Level_Devices_Count != 0)
+    {
+        for(uint16_t i = 0 ; i < (registro.header.Lower_Level_Devices_Count); i++)
+        {
+            printf("\n\t- ID del hijo nro %u:\t%u", (i+1), registro.LowerIDsVector[i]);
+        }
+    }
+    printf("\n---------------------------------------------\n");
     printf("\n-------------------------------------------------------------\n");
     printf("FIN DEL PROGRAMA :D");
     printf("\n-------------------------------------------------------------\n");
