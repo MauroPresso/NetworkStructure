@@ -51,7 +51,7 @@ uint64_t extract_bits_segment64(uint64_t value, uint8_t startBit, uint8_t endBit
 uint8_t countDevices(void)
 {
     FILE *pf;
-    pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
+    pf = fopen("D:\\InformaticaII_UTN-FRN\\NetworkStructure\\NetworkStructure\\network_structure.dat","rb");
     if (pf == NULL)
     {
         printf("\n-------------------------------------------------------------");
@@ -94,7 +94,7 @@ uint8_t countDevices(void)
 struct Registro getRegister(uint16_t target_id)
 {
     FILE *pf;
-    pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
+    pf = fopen("D:\\InformaticaII_UTN-FRN\\NetworkStructure\\NetworkStructure\\network_structure.dat","rb");
     if (pf == NULL)
     {
         printf("\n-------------------------------------------------------------");
@@ -135,23 +135,26 @@ struct Registro getRegister(uint16_t target_id)
             registre.header.Upper_Level_Device_ID = extract_bits_segment64(header, 48, 63);
             // Terminó de leer el header.
             // Creo el vector dinámico para guardar los IDs.
-            registre.LowerIDsVector = (uint16_t*)malloc((lower_level_devices_count) * sizeof(uint16_t));
-            // Verificar si malloc tuvo éxito (OBLIGATORIO para el examen)
-            if (registre.LowerIDsVector == NULL) 
+            if(lower_level_devices_count != 0)
             {
-                printf("Error: No se pudo asignar memoria para LowerIDsVector\n");
-                fclose(pf);
-                return registre;
-            }
-            // 2. Leer los IDs de conexiones
-            for(uint8_t i = 0; i < lower_level_devices_count; i++) 
-            {
-                if (fread(&(registre.LowerIDsVector[i]), sizeof(uint16_t), 1, pf) != 1) // Falló la lectura.
+                registre.LowerIDsVector = (uint16_t*)malloc((lower_level_devices_count) * sizeof(uint16_t));
+                // Verificar si malloc tuvo éxito (OBLIGATORIO para el examen)
+                if (registre.LowerIDsVector == NULL) 
                 {
-                    printf("Error al leer el ID de conexión %u\n", i);
-                    free(registre.LowerIDsVector); // Liberar memoria si falla la lectura
-                    registre.LowerIDsVector = NULL;
+                    printf("Error: No se pudo asignar memoria para LowerIDsVector\n");
+                    fclose(pf);
+                    return registre;
                 }
+                // 2. Leer los IDs de conexiones
+                for(uint16_t i = 0; i < lower_level_devices_count; i++) 
+                {
+                    if (fread(&(registre.LowerIDsVector[i]), sizeof(uint16_t), 1, pf) != 1) // Falló la lectura.
+                    {
+                        printf("Error al leer el ID de conexión %u\n", i);
+                        free(registre.LowerIDsVector); // Liberar memoria si falla la lectura
+                        registre.LowerIDsVector = NULL;
+                    }
+                }                
             }
         }
         else
@@ -173,7 +176,7 @@ struct Registro getRegister(uint16_t target_id)
 void showIDs(void)
 {
     FILE *pf;
-    pf = fopen("D:\\Facultad\\InformaticaII_UTN-FRN\\NetworkStructure\\network_structure.dat","rb");
+    pf = fopen("D:\\InformaticaII_UTN-FRN\\NetworkStructure\\NetworkStructure\\network_structure.dat","rb");
     if (pf == NULL)
     {
         printf("\n-------------------------------------------------------------");
