@@ -135,8 +135,11 @@ int main()
         printf("\nSe libero la memoria dinamica");
         network = NULL;
         printf("\nSe libero el puntero al vector de registros");
+        free(path_vector);
+        printf("\nSe libero la memoria dinamica");
+        path_vector = NULL;
+        printf("\nSe libero el puntero al vector de la secuencia de conexion");
         printf("\n-------------------------------------------------------------\n");
-
     }
     printf("\nFIN DEL PROGRAMA :D");
     return 0;
