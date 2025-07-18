@@ -116,13 +116,20 @@ int main()
             currentID = parentID;
         }
         // Imprimiendo el vector secuencia.
-        printf("\n-------------------------------------------------------------\n");
-        printf("Secuencia de conexion del ID seleccionado por el usuario:\n");
-        for(size_t d = 0; d < (path_devices_count); d++)
+        printf("\n-------------------------------------------------------------------------------\n");
+        printf("Secuencia de conexion del ID seleccionado por el usuario (ID = %u):\n", userTargetID);
+        for(int d = ((int)(path_devices_count) - 1); d >= 0; --d)
         {
-            printf("ID %u ->\t", path_vector[d]);
+            if(d != 0)
+            {
+                printf("ID %u ->\t", path_vector[d]);
+            }
+            else
+            {
+                printf("ID %u", path_vector[d]);
+            }
         }        
-        printf("\n-------------------------------------------------------------\n");
+        printf("\n-------------------------------------------------------------------------------\n");
         printf("\n-------------------------------------------------------------");
         free(network);
         printf("\nSe libero la memoria dinamica");
