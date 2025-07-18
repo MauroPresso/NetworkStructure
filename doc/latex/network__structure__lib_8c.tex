@@ -1,0 +1,86 @@
+\doxysection{network\+\_\+structure\+\_\+lib.\+c File Reference}
+\hypertarget{network__structure__lib_8c}{}\label{network__structure__lib_8c}\index{network\_structure\_lib.c@{network\_structure\_lib.c}}
+
+
+Desarrollos de funciones para manipulación de datos.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}network\+\_\+structure\+\_\+lib.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint64\+\_\+t \mbox{\hyperlink{network__structure__lib_8c_a66a9485d771b97b72542a7f7f927b51d}{extract\+\_\+bits\+\_\+segment64}} (uint64\+\_\+t value, uint8\+\_\+t start\+Bit, uint8\+\_\+t end\+Bit)
+\begin{DoxyCompactList}\small\item\em Extrae un segmento de bits de un valor de 64 bits. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{network__structure__lib_8c_a33034e34988225df4a4ed95bf5ea7ca1}{count\+Devices}} (void)
+\begin{DoxyCompactList}\small\item\em Cuenta la cantidad de dispositivos que hay en la red. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_registro}{Registro}} \mbox{\hyperlink{network__structure__lib_8c_aa81a5104f099fe26be87e1c2a556c57b}{get\+Register}} (uint16\+\_\+t target\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Trabaja con el registro un equipo a eleccion. \end{DoxyCompactList}\item 
+\Hypertarget{network__structure__lib_8c_a33e051f52fedb225965beddfb47fa1aa}\label{network__structure__lib_8c_a33e051f52fedb225965beddfb47fa1aa} 
+void {\bfseries show\+IDs} (void)
+\begin{DoxyCompactList}\small\item\em muestra en consola los ID de todos los equipos de la red. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Desarrollos de funciones para manipulación de datos. 
+
+Este archivo contiene los desarrollos de funciones para manipular datos. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{network__structure__lib_8c_a33034e34988225df4a4ed95bf5ea7ca1}\index{network\_structure\_lib.c@{network\_structure\_lib.c}!countDevices@{countDevices}}
+\index{countDevices@{countDevices}!network\_structure\_lib.c@{network\_structure\_lib.c}}
+\doxysubsubsection{\texorpdfstring{countDevices()}{countDevices()}}
+{\footnotesize\ttfamily \label{network__structure__lib_8c_a33034e34988225df4a4ed95bf5ea7ca1} 
+uint8\+\_\+t count\+Devices (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Cuenta la cantidad de dispositivos que hay en la red. 
+
+\begin{DoxyReturn}{Returns}
+retorna la cantidad de dispositivos de la red (retorna en una variable, no muestra en consola). 
+\end{DoxyReturn}
+\Hypertarget{network__structure__lib_8c_a66a9485d771b97b72542a7f7f927b51d}\index{network\_structure\_lib.c@{network\_structure\_lib.c}!extract\_bits\_segment64@{extract\_bits\_segment64}}
+\index{extract\_bits\_segment64@{extract\_bits\_segment64}!network\_structure\_lib.c@{network\_structure\_lib.c}}
+\doxysubsubsection{\texorpdfstring{extract\_bits\_segment64()}{extract\_bits\_segment64()}}
+{\footnotesize\ttfamily \label{network__structure__lib_8c_a66a9485d771b97b72542a7f7f927b51d} 
+uint64\+\_\+t extract\+\_\+bits\+\_\+segment64 (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{value}{, }\item[{uint8\+\_\+t}]{start\+Bit}{, }\item[{uint8\+\_\+t}]{end\+Bit}{}\end{DoxyParamCaption})}
+
+
+
+Extrae un segmento de bits de un valor de 64 bits. 
+
+Devuelve un segmento de bits definido por las posiciones start\+Bit y end\+Bit.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Valor original. \\
+\hline
+{\em start\+Bit} & Posición inicial (0-\/63). \\
+\hline
+{\em end\+Bit} & Posición final (0-\/63). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Segmento de bits extraído. Si las posiciones son inválidas, retorna el valor original. 
+\end{DoxyReturn}
+\Hypertarget{network__structure__lib_8c_aa81a5104f099fe26be87e1c2a556c57b}\index{network\_structure\_lib.c@{network\_structure\_lib.c}!getRegister@{getRegister}}
+\index{getRegister@{getRegister}!network\_structure\_lib.c@{network\_structure\_lib.c}}
+\doxysubsubsection{\texorpdfstring{getRegister()}{getRegister()}}
+{\footnotesize\ttfamily \label{network__structure__lib_8c_aa81a5104f099fe26be87e1c2a556c57b} 
+struct \mbox{\hyperlink{struct_registro}{Registro}} get\+Register (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{target\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Trabaja con el registro un equipo a eleccion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & ID del equipo del cual se quiere obtener el registro.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+devuelve el registro completo de ese equipo en forma de una estructura. 
+\end{DoxyReturn}

@@ -1,0 +1,25 @@
+var NAVTREEINDEX0 =
+{
+"annotated.html":[0,0],
+"classes.html":[0,1],
+"files.html":[1,0],
+"globals.html":[1,1,0],
+"globals_func.html":[1,1,1],
+"index.html":[],
+"network__structure__lib_8c.html":[1,0,0],
+"network__structure__lib_8c.html#a33034e34988225df4a4ed95bf5ea7ca1":[1,0,0,0],
+"network__structure__lib_8c.html#a33e051f52fedb225965beddfb47fa1aa":[1,0,0,3],
+"network__structure__lib_8c.html#a66a9485d771b97b72542a7f7f927b51d":[1,0,0,1],
+"network__structure__lib_8c.html#aa81a5104f099fe26be87e1c2a556c57b":[1,0,0,2],
+"network__structure__lib_8h.html":[1,0,1],
+"network__structure__lib_8h.html#a33034e34988225df4a4ed95bf5ea7ca1":[1,0,1,2],
+"network__structure__lib_8h.html#a33e051f52fedb225965beddfb47fa1aa":[1,0,1,5],
+"network__structure__lib_8h.html#a66a9485d771b97b72542a7f7f927b51d":[1,0,1,3],
+"network__structure__lib_8h.html#aa81a5104f099fe26be87e1c2a556c57b":[1,0,1,4],
+"network__structure__lib_8h_source.html":[1,0,1],
+"network__structure__main_8c.html":[1,0,2],
+"network__structure__prog_8c.html":[1,0,3],
+"pages.html":[],
+"struct_header.html":[0,0,0],
+"struct_registro.html":[0,0,1]
+};
