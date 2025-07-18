@@ -28,7 +28,7 @@ int main()
         }
         // Seleccionando ID.
         uint16_t userTargetID;
-        uint16_t newTargetID;
+        uint16_t currentID;
         printf("\n\n\nIngrese el ID del equipo:\t");
         scanf("%u" , &userTargetID);
         do{
@@ -37,15 +37,37 @@ int main()
         }while(userTargetID < 1 || userTargetID > 10);
         uint8_t path_devices_count;
         path_devices_count = 1;
-        newTargetID = userTargetID;
+        currentID = userTargetID;
         // Bucle para contar los dispositivos de la conexion.
-        while(network[newTargetID].header.Upper_Level_Device_ID != 65535) // 65535 es un ID invalido.
+        while(path_devices_count <= 10) 
         {
+            // 1) Buscamos en el array el registro cuyo header.ID == currentID
+            int idx = -1;
+            for (size_t i = 0; i < devices_count; i++) 
+            {
+                if (network[i].header.ID == currentID)
+                {
+                    idx = (int)i;
+                    break;
+                }
+            }
+            if (idx < 0) 
+            {
+                // No encontramos ese ID en la red: terminamos
+                break;
+            }
+            // 2) Leemos el Upper_Level_Device_ID de ese registro
+            uint16_t parentID = network[idx].header.Upper_Level_Device_ID;
+            // 3) Si es inválido (65535), ya llegamos a la raíz
+            if (parentID == 65535) 
+            {
+                break;
+            }
+            // 4) Subimos un nivel y aumentamos el contador
+            currentID = parentID;
             path_devices_count++;
-            newTargetID = network[newTargetID].header.Upper_Level_Device_ID;
         }
         printf("\nCantidad de dispositivos en la secuencia de conexion:\t%u\n", path_devices_count);
-
         // Libero los vectores de IDs de los registros.
         for(uint8_t c = 0; c < (devices_count); c++) 
         {
@@ -58,12 +80,56 @@ int main()
             }
             printf("\n---------------------------------------------\n");
         }
+        printf("\n-------------------------------------------------------------\n");
+        printf("\n-------------------------------------------------------------\n");
+        printf("\nCantidad de dispositivos en la secuencia de conexion:\t%u\n", path_devices_count);
+        // Cargando el vector secuencia.
+        currentID = userTargetID;
+        uint16_t* path_vector;
+        path_vector = (uint16_t*)malloc((path_devices_count)*(sizeof(uint16_t)));
+        for(size_t k = 0; k < path_devices_count; k++)
+        {
+            path_vector[k] = currentID;
+            // 1) Buscamos en el array el registro cuyo header.ID == currentID
+            int idx = -1;
+            for (size_t i = 0; i < devices_count; i++) 
+            {
+                if (network[i].header.ID == currentID)
+                {
+                    idx = (int)i;
+                    break;
+                }
+            }
+            if (idx < 0) 
+            {
+                // No encontramos ese ID en la red: terminamos
+                break;
+            }
+            // 2) Leemos el Upper_Level_Device_ID de ese registro
+            uint16_t parentID = network[idx].header.Upper_Level_Device_ID;
+            // 3) Si es inválido (65535), ya llegamos a la raíz
+            if (parentID == 65535) 
+            {
+                break;
+            }
+            // 4) Subimos un nivel y aumentamos el contador
+            currentID = parentID;
+        }
+        // Imprimiendo el vector secuencia.
+        printf("\n-------------------------------------------------------------\n");
+        printf("Secuencia de conexion del ID seleccionado por el usuario:\n");
+        for(size_t d = 0; d < (path_devices_count); d++)
+        {
+            printf("ID %u ->\t", path_vector[d]);
+        }        
+        printf("\n-------------------------------------------------------------\n");
         printf("\n-------------------------------------------------------------");
         free(network);
         printf("\nSe libero la memoria dinamica");
         network = NULL;
         printf("\nSe libero el puntero al vector de registros");
         printf("\n-------------------------------------------------------------\n");
+
     }
     printf("\nFIN DEL PROGRAMA :D");
     return 0;
