@@ -76,9 +76,7 @@ int main()
             if(network[c].header.Lower_Level_Devices_Count != 0)
             {
                 free(network[c].LowerIDsVector);
-                printf("\nSe libero la memoria dinamica");
                 network[c].LowerIDsVector = NULL;
-                printf("\nSe libero el puntero al vector de IDs");
             }
             printf("\n---------------------------------------------\n");
         }
@@ -134,13 +132,9 @@ int main()
         printf("\n-------------------------------------------------------------------------------\n");
         printf("\n-------------------------------------------------------------");
         free(network);
-        printf("\nSe libero la memoria dinamica");
         network = NULL;
-        printf("\nSe libero el puntero al vector de registros");
         free(path_vector);
-        printf("\nSe libero la memoria dinamica");
         path_vector = NULL;
-        printf("\nSe libero el puntero al vector de la secuencia de conexion");
         printf("\n-------------------------------------------------------------\n");
     }
     printf("\nFIN DEL PROGRAMA :D");
