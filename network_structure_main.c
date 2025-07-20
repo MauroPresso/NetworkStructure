@@ -33,33 +33,31 @@ int main()
     printf("\n---------------------------------------------\n");
     printf("Registro completo del dispositivo nro %u\n\n", targetID);
     printf("- ID: %u\n", registro.header.ID);
-    /*printf("- Tipo de Dispositivo: %u\n", registro.header.Device_Type);
-    printf("- Info de Dispositivo: %u\n", registro.header.Info);*/ 
     if(registro.header.Device_Type == 0)
     {
         printf("- Tipo de dispositivo: CPU\n");
     }
-    if(registro.header.Device_Type == 1)
+    else if(registro.header.Device_Type == 1)
     {
         printf("- Tipo de dispositivo: SENSOR ");
         if(registro.header.Info == 0)
         {
             printf("de CAUDAL\n");
         }
-        if(registro.header.Info == 1)
+        else if(registro.header.Info == 1)
         {
             printf("de TEMPERATURA\n");
         }
-        if(registro.header.Info == 2)
+        else if(registro.header.Info == 2)
         {
             printf("de PRESION\n");
         }
-        if(registro.header.Info == 3)
+        else if(registro.header.Info == 3)
         {
             printf("de NIVEL\n");
         }
     }
-    if(registro.header.Device_Type == 2)
+    else if(registro.header.Device_Type == 2)
     {
         printf("- Tipo de dispositivo: ACTUADOR ");
         if(registro.header.Info == 0)
@@ -71,11 +69,19 @@ int main()
             printf("(MOTOR)\n");
         }
     }
-    if(registro.header.Device_Type == 3)
+    else if(registro.header.Device_Type == 3)
     {
         printf("- Tipo de dispositivo: CONCENTRADOR\n");   
     }
-    printf("- ID del dispositivo padre: %u\n", registro.header.Upper_Level_Device_ID);
+    // ID del padre.
+    if(registro.header.Upper_Level_Device_ID == 65535)
+    {
+        printf("- ID del dispositivo padre: ID invalido\n");
+    }
+    else
+    {
+        printf("- ID del dispositivo padre: %u\n", registro.header.Upper_Level_Device_ID);
+    }
     printf("- Cantidad de dispositivos hijos: %u\n", registro.header.Lower_Level_Devices_Count);
     if(registro.header.Lower_Level_Devices_Count != 0)
     {
