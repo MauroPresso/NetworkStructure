@@ -59,12 +59,6 @@ uint8_t countDevices(void)
         printf("-------------------------------------------------------------\n");
         return 0;
     }
-    else
-    {
-        printf("\n-------------------------------------------------------------");
-        printf("\nFile opening was OK. Continue with the procedure.\n");
-        printf("-------------------------------------------------------------\n");
-    }
     uint64_t header;
     uint16_t lower_level_devices_count;
     uint8_t total_devices_count;
@@ -78,9 +72,6 @@ uint8_t countDevices(void)
         fseek(pf, lower_level_devices_count * sizeof(uint16_t), SEEK_CUR);
     }
     fclose(pf);
-    printf("\n-------------------------------------------------------------");
-    printf("\nFile closing was OK. Continue with the program.\n");
-    printf("-------------------------------------------------------------\n");
     return total_devices_count;
 }
 
@@ -101,12 +92,6 @@ struct Registro getRegister(uint16_t target_id)
         printf("\nError 404: Not Found\n");
         printf("-------------------------------------------------------------\n");
         exit;
-    }
-    else
-    {
-        printf("\n-------------------------------------------------------------");
-        printf("\nFile opening was OK. Continue with the procedure.\n");
-        printf("-------------------------------------------------------------\n");
     }
     struct Registro registre;
     uint64_t header;
@@ -164,9 +149,6 @@ struct Registro getRegister(uint16_t target_id)
         }
     }
     fclose(pf);
-    printf("\n-------------------------------------------------------------");
-    printf("\nFile closing was OK. Continue with the program.\n");
-    printf("-------------------------------------------------------------\n");
     return registre;
 }
 
@@ -194,7 +176,7 @@ void showIDs(void)
     uint16_t device_id;
     uint16_t lower_level_devices_count;
     int counter = 0;
-    printf("\n=== IDs validos de dispositivos ===\n\n");
+    printf("\n=== IDs de TODOS los dispositivos de la red ===\n\n");
     while (fread(&header, sizeof header, 1, pf) != 0) 
     {
         // EXTRAER Device ID de bits 0–15
@@ -209,10 +191,8 @@ void showIDs(void)
     }
     if(counter == 0) 
     {
-        printf("No se encontraron dispositivos validos.\n");
+        printf("No se encontraron ID validos de dispositivos.\n");
     }
     fclose(pf);
-    printf("\n-------------------------------------------------------------");
-    printf("\nFile closing was OK. Continue with the program.\n");
-    printf("-------------------------------------------------------------\n");
+
 }
