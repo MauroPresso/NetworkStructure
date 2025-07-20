@@ -166,12 +166,6 @@ void showIDs(void)
         printf("-------------------------------------------------------------\n");
         exit(EXIT_FAILURE);
     }
-    else
-    {
-        printf("\n-------------------------------------------------------------");
-        printf("\nFile opening was OK. Continue with the procedure.\n");
-        printf("-------------------------------------------------------------\n");
-    }
     uint64_t header;
     uint16_t device_id;
     uint16_t lower_level_devices_count;
