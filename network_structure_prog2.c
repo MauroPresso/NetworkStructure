@@ -69,7 +69,6 @@ int main()
             currentID = parentID;
             path_devices_count++;
         }
-        printf("\nCantidad de dispositivos en la secuencia de conexion:\t%u\n", path_devices_count);
         // Libero los vectores de IDs de los registros.
         for(uint8_t c = 0; c < (devices_count); c++) 
         {
@@ -78,9 +77,7 @@ int main()
                 free(network[c].LowerIDsVector);
                 network[c].LowerIDsVector = NULL;
             }
-            printf("\n---------------------------------------------\n");
         }
-        printf("\n-------------------------------------------------------------\n");
         printf("\n-------------------------------------------------------------\n");
         printf("\nCantidad de dispositivos en la secuencia de conexion:\t%u\n", path_devices_count);
         // Cargando el vector secuencia.
@@ -130,12 +127,10 @@ int main()
             }
         }        
         printf("\n-------------------------------------------------------------------------------\n");
-        printf("\n-------------------------------------------------------------");
         free(network);
         network = NULL;
         free(path_vector);
         path_vector = NULL;
-        printf("\n-------------------------------------------------------------\n");
     }
     printf("\nFIN DEL PROGRAMA :D");
     return 0;
