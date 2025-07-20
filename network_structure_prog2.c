@@ -29,11 +29,13 @@ int main()
         // Seleccionando ID.
         uint16_t userTargetID;
         uint16_t currentID;
-        printf("\n\n\nIngrese el ID del equipo:\t");
-        scanf("%u" , &userTargetID);
         do{
-            printf("\nIngrese el ID del equipo:\t");
+            printf("\nIngrese el ID del equipo (1 a 10):\t");
             scanf("%u" , &userTargetID);
+            if(userTargetID < 1 || userTargetID > 10)
+            {
+                printf("\nID ingresado erroneo. Intente nuevamente.");
+            }
         }while(userTargetID < 1 || userTargetID > 10);
         uint8_t path_devices_count;
         path_devices_count = 1;
