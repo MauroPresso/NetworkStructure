@@ -20,8 +20,14 @@ int main()
     showIDs();
     printf("\n-------------------------------------------------------------\n");
     uint16_t targetID;
-    printf("\nIngrese el ID del dispositivo del cual desee obtener el registro completo:\t");
-    scanf("%u" , &targetID);
+    do{
+        printf("\nIngrese el ID del equipo (1 a 10):\t");
+        scanf("%u" , &targetID);
+        if(targetID < 1 || targetID > 10)
+        {
+            printf("\nID ingresado erroneo. Intente nuevamente.");
+        }
+    }while(targetID < 1 || targetID > 10);
     struct Registro registro;
     registro = getRegister(targetID);
     printf("\n---------------------------------------------\n");
