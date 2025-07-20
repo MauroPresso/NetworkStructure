@@ -38,43 +38,51 @@ int main()
             {
                 printf("- Tipo de dispositivo: CPU\n");
             }
-            if(network[c].header.Device_Type == 1)
+            else if(network[c].header.Device_Type == 1)
             {
                 printf("- Tipo de dispositivo: SENSOR ");
                 if(network[c].header.Info == 0)
                 {
                     printf("de CAUDAL\n");
                 }
-                if(network[c].header.Info == 1)
+                else if(network[c].header.Info == 1)
                 {
                     printf("de TEMPERATURA\n");
                 }
-                if(network[c].header.Info == 2)
+                else if(network[c].header.Info == 2)
                 {
                     printf("de PRESION\n");
                 }
-                if(network[c].header.Info == 3)
+                else if(network[c].header.Info == 3)
                 {
                     printf("de NIVEL\n");
                 }
             }
-            if(network[c].header.Device_Type == 2)
+            else if(network[c].header.Device_Type == 2)
             {
                 printf("- Tipo de dispositivo: ACTUADOR ");
                 if(network[c].header.Info == 0)
                 {
                     printf("(VALVULA)\n");
                 }
-                if(network[c].header.Info == 1)
+                else if(network[c].header.Info == 1)
                 {
                     printf("(MOTOR)\n");
                 }
             }
-            if(network[c].header.Device_Type == 3)
+            else if(network[c].header.Device_Type == 3)
             {
                 printf("- Tipo de dispositivo: CONCENTRADOR\n");   
             }
-            printf("- ID del dispositivo padre: %u\n", network[c].header.Upper_Level_Device_ID);
+            // ID del padre.
+            if(network[c].header.Upper_Level_Device_ID == 65535)
+            {
+                printf("- ID del dispositivo padre: ID invalido\n");
+            }
+            else
+            {
+                printf("- ID del dispositivo padre: %u\n", network[c].header.Upper_Level_Device_ID);
+            }
             printf("- Cantidad de dispositivos hijos: %u\n", network[c].header.Lower_Level_Devices_Count);
             if(network[c].header.Lower_Level_Devices_Count != 0)
             {
