@@ -91,9 +91,7 @@ int main()
         }
         printf("\n---------------------------------------------");
         free(registro.LowerIDsVector);
-        printf("\nSe libero la memoria dinamica");
         registro.LowerIDsVector = NULL;
-        printf("\nSe libero el puntero al vector de IDs");
     }
     printf("\n---------------------------------------------\n");
     printf("\n-------------------------------------------------------------\n");
