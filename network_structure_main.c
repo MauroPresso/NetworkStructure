@@ -89,11 +89,10 @@ int main()
         {
             printf("\n\t- ID del hijo nro %u:\t%u", (i+1), registro.LowerIDsVector[i]);
         }
-        printf("\n---------------------------------------------");
+        printf("\n---------------------------------------------\n");
         free(registro.LowerIDsVector);
         registro.LowerIDsVector = NULL;
     }
-    printf("\n---------------------------------------------\n");
     printf("\n-------------------------------------------------------------\n");
     printf("FIN DEL PROGRAMA :D");
     printf("\n-------------------------------------------------------------\n");
