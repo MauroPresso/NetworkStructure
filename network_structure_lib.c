@@ -194,5 +194,4 @@ void showIDs(void)
         printf("No se encontraron ID validos de dispositivos.\n");
     }
     fclose(pf);
-
 }
